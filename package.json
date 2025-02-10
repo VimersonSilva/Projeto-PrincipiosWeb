@@ -11,6 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express-serve-static-core": "^5.0.6",
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1"
   }
 }
