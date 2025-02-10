@@ -6,10 +6,10 @@ import { Product } from './models/product';
 const userService = new UserService();
 const productService = new ProductService();
 
-const user1 = new User(1, "João", "joao@gmail.com");
+//const user1 = new User("João");
 const product1 = new Product(1, "Camiseta", 49.90, 100);
 
-userService.addUser(user1);
+//userService.addUser(user1);
 productService.addProduct(product1);
 
 console.log(userService.getUserById(1));
