@@ -1,35 +1,27 @@
-import { Product } from '../models/product';
+import {Product} from "../models/product";
+import ProductRepository from "../repository/productRepository";
 
-export class ProductService {
-    products: Product[];
-
-    constructor() {
-        this.products = [];
+class ProductService {
+    
+    async createProduct(name: string, price: number) {
+      return await ProductRepository.create({ name, price });
     }
-
-    addProduct(product: Product): void {
-        this.products.push(product);
-        console.log("Produto cadastrado: ", product);
+  
+    async getAllProducts() {
+      return await ProductRepository.findAll();
     }
-
-    getProductById(id: number): Product | string {
-        return this.products.find(product => product.id === id) || "Produto não encontrado";
+  
+    async getProductById(id: number) {
+      return await ProductRepository.findById(id);
     }
-
-    updateProduct(id: number, newData: Partial<Product>): void {
-        const product = this.getProductById(id);
-        if (typeof product === 'string') {
-            console.log("Produto não encontrado");
-            return;
-        }
-        product.name = newData.name || product.name;
-        product.price = newData.price || product.price;
-        product.stock = newData.stock || product.stock;
-        console.log("Produto atualizado: ", product);
+  
+    async updateProduct(id: number, updatedData: { name?: string; price?: number }) {
+      return await ProductRepository.update(id, updatedData);
     }
-
-    removeProductById(id: number): void {
-        this.products = this.products.filter(product => product.id !== id);
-        console.log("Produto removido: ", id);
+  
+    async deleteProduct(id: number) {
+      return await ProductRepository.delete(id);
     }
-}
+  }
+  
+  export default new ProductService();

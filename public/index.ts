@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as dotenv from "dotenv";
 import sequelize from "./config/database";
-import { UserRepository } from "./repository/userRepository.ts";
+import { UserRepository } from "./repository/userRepository";
 dotenv.config();
 const app = express();
 app.use(express.json());
