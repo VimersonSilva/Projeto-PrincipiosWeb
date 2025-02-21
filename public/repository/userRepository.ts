@@ -1,7 +1,7 @@
 import { User } from "../models/user";
 export class UserRepository {
  // Criar um novo usuário
- async create(data: { name: string; email: number; password: string}) {
+ async create(data: { name: string; email: string; password: string}) {
     return await User.create(data);
   }
 

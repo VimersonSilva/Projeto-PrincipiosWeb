@@ -12,7 +12,7 @@ export class UserService {
         if(password.length < 6 ){
             throw new Error("A senha de ve ter pelo menos 6 caracteres.");
         }
-        this.userRepository.createUser(name, email, password);
+        this.userRepository.create({name, email, password});
         console.log("Usuario cadastrado!");
     }
 
