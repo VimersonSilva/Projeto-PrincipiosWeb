@@ -6,7 +6,7 @@ export class Product extends Model {
   public id!: number;
   public name!: string;
   public price!: number;
-  public batchId!: number;
+  //public batchId!: number;
 }
 
 Product.init(
@@ -23,15 +23,15 @@ Product.init(
     price: {
       type: DataTypes.FLOAT,
       allowNull: false,
-    },
-    batchId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: Batch, // Relacionamento com Batch
-        key: "id",
-      },
-      allowNull: false,
-    },
+    }
+    //batchId: {
+    //  type: DataTypes.INTEGER,
+    //  references: {
+    //    model: Batch, // Relacionamento com Batch
+    //    key: "id",
+    //  },
+    //  allowNull: false,
+    //},
   },
   {
     sequelize,
@@ -41,7 +41,7 @@ Product.init(
 );
 
 // Definição da relação entre Produto e Lote
-Batch.hasMany(Product, { foreignKey: "batchId", as: "products" });
-Product.belongsTo(Batch, { foreignKey: "batchId", as: "batch" });
+//Batch.hasMany(Product, { foreignKey: "batchId", as: "products" });
+//Product.belongsTo(Batch, { foreignKey: "batchId", as: "batch" });
 
 export default Product;

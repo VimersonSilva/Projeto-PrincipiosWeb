@@ -1,9 +1,11 @@
+import Batch from "../models/batch";
 import {Product} from "../models/product";
 import ProductRepository from "../repository/productRepository";
 
-class ProductService {
+export class ProductService {
     
     async createProduct(name: string, price: number) {
+      
       return await ProductRepository.create({ name, price });
     }
   

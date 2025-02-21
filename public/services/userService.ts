@@ -1,34 +1,34 @@
 import { User } from '../models/user';
+import { UserRepository } from '../repository/userRepository';
 
 export class UserService {
-    users: User[];
-
+    userRepository: UserRepository;
+    
     constructor() {
-        this.users = [];
+        this.userRepository = new UserRepository();
     }
 
-    addUser(user: User): void {
-        this.users.push(user);
-        console.log("Usuario cadastrado: ", user);
-    }
-
-    getUserById(id: number): User | string {
-        return this.users.find(user => user.id === id) || "Usuário não encontrado";
-    }
-
-    updateUser(id: number, newData: Partial<User>): void {
-        const user = this.getUserById(id);
-        if (typeof user === 'string') {
-            console.log("Usuário não encontrado");
-            return;
+    createUser(name: string, email: string, password: string): void {
+        if(password.length < 6 ){
+            throw new Error("A senha de ve ter pelo menos 6 caracteres.");
         }
-        user.name = newData.name || user.name;
-        user.email = newData.email || user.email;
-        console.log("Usuário atualizado: ", user);
+        this.userRepository.createUser(name, email, password);
+        console.log("Usuario cadastrado!");
     }
 
-    removeUserById(id: number): void {
-        this.users = this.users.filter(user => user.id !== id);
-        console.log("Usuário removido: ", id);
-    }
+    async getAllUsers() {
+          return await this.userRepository.findAll();
+        }
+      
+        async getUserById(id: number) {
+          return await this.userRepository.findById(id);
+        }
+      
+        async updateUser(id: number, updatedData: { name?: string; email?: string; password?: string }) {
+          return await this.userRepository.update(id, updatedData);
+        }
+      
+        async deleteUser(id: number) {
+          return await this.userRepository.delete(id);
+        }
 }
