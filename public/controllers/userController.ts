@@ -22,6 +22,17 @@ export class UserController{
             return res.status(400).json({error: error.message});
         }
     }
+    
+    async addUser(req: Request, res: Response){
+        try{
+            const user = req.body;
+            this.userService.addUser(user);
+            return res.status(201).json(user);
+        }
+        catch(error:any){
+            return res.status(400).json({error: error.message});
+        }
+    }
 
     async getAllUser(req:Request, res:Response){
         const products = this.userService.getAllUsers();
@@ -43,7 +54,7 @@ export class UserController{
     async updateUser(req: Request, res:Response) {
         try{
             const user = await this.userService.updateUser(Number(req.params.id), req.body);
-            if(!user)  return res.status(404).json({error: "Usuario não encontrado"});
+            if(user === undefined)  return res.status(404).json({error: "Usuario não encontrado"});
 
             return res.json(user);
         } catch (error: any){
@@ -53,12 +64,8 @@ export class UserController{
 
     async delete(req: Request, res: Response){
         try{
-            const message = this.userService.deleteUser(Number(req.params.id));
-
-            if(!message) {
-                return res.status(404).json({error: "Usuario não encontrado"});
-            }
-
+            const message = this.userService.removeUserById(Number(req.params.id));
+            if(message === undefined) return res.status(404).json({error: "Usuario não encontrado"});
             return res.status(203).json(message);
         } catch (error: any){
             return res.status(400).json({error: error.message});

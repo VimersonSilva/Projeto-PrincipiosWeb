@@ -1,34 +1,44 @@
 import { User } from '../models/user';
-import { UserRepository } from '../repository/userRepository';
 
 export class UserService {
-    userRepository: UserRepository;
-    
+    users: User[];
+
     constructor() {
-        this.userRepository = new UserRepository();
+        this.users = [];
     }
 
-    createUser(name: string, email: string, password: string): void {
-        if(password.length < 6 ){
-            throw new Error("A senha de ve ter pelo menos 6 caracteres.");
-        }
-        this.userRepository.create({name, email, password});
-        console.log("Usuario cadastrado!");
+    async createUser(name: string, email: string, password: string): Promise<User> {
+        const user = User.build({ id: this.users.length + 1, name, email, password });
+        this.addUser(user);
+        return user;     
     }
 
-    async getAllUsers() {
-          return await this.userRepository.findAll();
+    addUser(user: User): void {
+        this.users.push(user);
+        console.log("Usuario cadastrado: ", user);
+    }
+
+    getUserById(id: number): User | string {
+        return this.users.find(user => user.id === id) || "Usuário não encontrado";
+    }
+
+    getAllUsers(): User[] {
+        return this.users;
+    }
+
+    updateUser(id: number, newData: Partial<User>): void {
+        const user = this.getUserById(id);
+        if (typeof user === 'string') {
+            console.log("Usuário não encontrado");
+            return;
         }
-      
-        async getUserById(id: number) {
-          return await this.userRepository.findById(id);
-        }
-      
-        async updateUser(id: number, updatedData: { name?: string; email?: string; password?: string }) {
-          return await this.userRepository.update(id, updatedData);
-        }
-      
-        async deleteUser(id: number) {
-          return await this.userRepository.delete(id);
-        }
+        user.name = newData.name || user.name;
+        user.email = newData.email || user.email;
+        console.log("Usuário atualizado: ", user);
+    }
+
+    removeUserById(id: number): void {
+        this.users = this.users.filter(user => user.id !== id);
+        console.log("Usuário removido: ", id);
+    }
 }

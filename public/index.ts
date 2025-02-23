@@ -3,6 +3,10 @@ import * as dotenv from "dotenv";
 import sequelize from "./config/database";
 import { UserController } from "./controllers/userController";
 import { ProductController } from "./controllers/productController";
+import * as swaggerUi from "swagger-ui-express";
+import * as fs from "fs";
+import * as path from "path";
+
 dotenv.config();
 
 const app = express();
@@ -10,6 +14,8 @@ const productController = new ProductController();
 const userController = new UserController();
 app.use(express.json());
 
+const swaggerDocument = JSON.parse(fs.readFileSync(path.join(__dirname, "../swagger.json"), "utf8"));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.post("/product", async (req, res) =>{
     try {
