@@ -1,21 +1,28 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import sequelize from '../config/database';
 // Defina os atributos do modelo
-interface UserAttributes {
- id: number;
- name: string;
- email: string;
- password: string;
-}
-export class User extends Model<UserAttributes> implements
-UserAttributes {
- public id!: number;
- public name!: string;
- public email!: string;
- public password!: string;
+//interface UserAttributes {
+// id: number;
+// name: string;
+// email: string;
+// password: string;
+//}
+//export class User extends Model<UserAttributes> implements
+//UserAttributes {
+// public id!: number;
+// public name!: string;
+// public email!: string;
+// public password!: string;
+//
+//}
 
-}
-
+export class User extends Model {
+    public id!: number;
+    public name!: string;
+    public email!: number;
+    public password!: string;
+    //public batchId!: number;
+  }
 User.init(
     {
     id: {
