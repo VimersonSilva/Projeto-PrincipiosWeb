@@ -18,8 +18,17 @@ export class UserService {
         console.log("Usuario cadastrado: ", user);
     }
 
-    getUserById(id: number): User | string {
-        return this.users.find(user => user.id === id) || "Usuário não encontrado";
+       
+    getUserById(id: number): User | string {        
+        return this.users.find(user => user.id === id) || "Usuário não encontrado";;
+    }    
+       
+    async getUserByName(name: string): Promise<User> {
+        const user = this.users.find(user => user.name === name);
+        if (!user) {
+            throw new Error("Usuário não encontrado");
+          }
+        return user;
     }
 
     getAllUsers(): User[] {
@@ -33,6 +42,7 @@ export class UserService {
             return;
         }
         user.name = newData.name || user.name;
+
         user.email = newData.email || user.email;
         console.log("Usuário atualizado: ", user);
     }
@@ -41,4 +51,6 @@ export class UserService {
         this.users = this.users.filter(user => user.id !== id);
         console.log("Usuário removido: ", id);
     }
+
+
 }
