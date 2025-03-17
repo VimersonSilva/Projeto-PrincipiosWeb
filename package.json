@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "mocha \"test/userTests.spec.ts\"",
+    "test": "mocha --loader ts-node/esm \"test/**/*.spec.ts\"",
     "dev": "ts-node public/index.ts"
   },
   "keywords": [],
@@ -16,6 +16,7 @@
     "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.13.0",
     "pg": "^8.13.3",
     "pq": "^0.0.3",
@@ -30,13 +31,13 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.13.1",
     "@types/swagger-ui-express": "^4.1.8",
-    "chai": "^5.2.0",
+    "chai": "^4.3.4",
     "mocha": "^11.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
   "mocha": {
-    "require":"ts-node/register",
+    "require": "ts-node/register",
     "recursive": true,
     "timeout": 5000
   }

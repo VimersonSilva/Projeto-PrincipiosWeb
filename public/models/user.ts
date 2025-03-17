@@ -19,7 +19,7 @@ import sequelize from '../config/database';
 export class User extends Model {
     public id!: number;
     public name!: string;
-    public email!: number;
+    public email!: string;
     public password!: string;
     //public batchId!: number;
   }

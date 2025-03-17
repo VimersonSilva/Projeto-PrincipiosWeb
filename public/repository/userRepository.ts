@@ -31,6 +31,11 @@ export class UserRepository {
      await user.destroy();
      return { message: "Usuario removido com sucesso" };
    }
+   async deleteAll() {
+    await User.destroy({
+        where: {},
+    });
+}
  }
  
  
