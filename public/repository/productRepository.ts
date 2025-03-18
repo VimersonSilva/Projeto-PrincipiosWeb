@@ -1,8 +1,8 @@
 import {Product} from "../models/product";
 
-class ProductRepository {
+export class ProductRepository {
   // 🔹 Criar um novo produto
-  async create(data: { name: string; price: number }) {
+  async create(data: { name: string; price: number, stock: number}) {
     return await Product.create(data);
   }
 
@@ -17,11 +17,13 @@ class ProductRepository {
   }
 
   // 🔹 Atualizar um produto
-  async update(id: number, updatedData: { name?: string; price?: number }) {
+  async update(id: number, updatedData: { name?: string; price?: number}) {
     const product = await Product.findByPk(id);
     if (!product) return null;
 
-    return await product.update(updatedData);
+     const prod = await product.update(updatedData);
+     product.save();
+     return prod
   }
 
   // 🔹 Excluir um produto

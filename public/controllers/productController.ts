@@ -13,22 +13,23 @@ export class ProductController{
 
     async createProduct(req: Request, res: Response){
         try{
-            const {name, price} = req.body;
-            const product = await this.productService.createProduct(name, price);
+            const {name, price, stock} = req.body;
+            const product = await this.productService.createProduct(name, price, stock);
             return res.status(201).json(product);
         } catch( error:any){
             return res.status(400).json({error: error.message});
         }
     }
-    async addProduct(req: Request, res: Response){
-        try{
-            const product = req.body;
-            this.productService.addProduct(product);
-            return res.status(201).json(product);
-        } catch(error: any){
-            return res.status(400).json({error: error.message});
-        }
-    }      
+    //async addProduct(req: Request, res: Response){
+    //    try{
+    //        const product = req.body;
+    //        this.productService.addProduct(product);
+    //        return res.status(201).json(product);
+    //    } catch(error: any){
+    //        return res.status(400).json({error: error.message});
+    //    }
+    //}      
+
 
     async getAllProducts(req:Request, res:Response){
         const products = this.productService.getAllProducts();
@@ -50,7 +51,7 @@ export class ProductController{
     async updateProduct(req: Request, res:Response) {
         try{
             const product = await this.productService.updateProduct(Number(req.params.id), req.body);
-            if(product === null || product === undefined) return res.status(404).json({error: "Produto não encontrado"});
+            if(product === null ||typeof product === 'string') return res.status(404).json({error: "Produto não encontrado"});
 
             return res.json(product);
         } catch (error: any){

@@ -1,4 +1,4 @@
-import chai,{expect} from "chai";
+import {expect} from "chai";
 import {User} from '../public/models/user';
 
 describe('Teste do user', () => {
