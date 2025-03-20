@@ -1,43 +1,45 @@
 import { Product } from '../models/product';
-
+import {ProductRepository} from '../repository/productRepository'
 export class ProductService {
-    products: Product[];
+    productsRepository: ProductRepository;
 
-    constructor() {
-        this.products = [];
+    constructor(productsRepository?: ProductRepository) {
+        this.productsRepository = productsRepository || new ProductRepository();
     }
-    createProduct(name: string, price: number) {
-      const product = { id: Date.now(), name, price };
-      return product;
+    createProduct(name: string, price: number, stock: number) {
+      const product = { id: Date.now(), name, price, stock };
+      const productReturn = this.productsRepository.create(product);
+
+      return productReturn;
   }
 
-    addProduct(product: Product): void {
-        this.products.push(product);
-        console.log("Produto cadastrado: ", product);
+    //addProduct(product: Product): void {
+    //    this.products.push(product);
+    //    console.log("Produto cadastrado: ", product);
+    //}
+
+    getProductById(id: number): Promise<Product | null>  {
+        const product = this.productsRepository.findById(id);
+        return product;
     }
 
-    getProductById(id: number): Product | string {
-        return this.products.find(product => product.id === id) || "Produto não encontrado";
+    getAllProducts(): Promise<Product[]> {
+      const products = this.productsRepository.findAll();
+      return products;
     }
 
-    getAllProducts(): Product[] {
-      return this.products;
-    }
-
-    updateProduct(id: number, newData: Partial<Product>): string | void {
-        const product = this.getProductById(id);
-        if (typeof product === 'string') {
-            console.log("Produto não encontrado");
-            return;
+    updateProduct(id: number, newData: Partial<Product>): Promise<Product | null> | string {
+        const product = this.productsRepository.update(id, newData);
+        if (!product) {
+            return "Produto não encontrado.";
         }
-        product.name = newData.name || product.name;
-        product.price = newData.price || product.price;
-        product.stock = newData.stock || product.stock;
-        console.log("Produto atualizado: ", product);
+        
+        return product;
     }
 
-    removeProductById(id: number):void {
-        this.products = this.products.filter(product => product.id !== id);
-        console.log("Produto removido: ", id);
+    removeProductById(id: number):Promise<null | {message:string}> {
+        const product = this.productsRepository.delete(id);
+        return product;
+
     }
 }

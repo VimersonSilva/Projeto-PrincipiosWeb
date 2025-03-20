@@ -1,13 +1,31 @@
-export class Product {
-    id: number;
-    name: string;
-    price: number;
-    stock: number;
+import { Model, DataTypes, Optional } from 'sequelize';
+import sequelize from '../config/database';
 
-    constructor(id: number, name: string, price: number, stock: number) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.stock = stock;
-    }
+export class Product extends Model {
+    id!: number;
+    name!: string;
+    price!: number;
+    stock!: number;
 }
+Product.init(
+    {
+    id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    },
+    name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    },
+    price: {
+    type: DataTypes.NUMBER,
+    allowNull: false,
+    },
+    },
+    {
+    sequelize,
+    tableName: "products",
+    timestamps: false,
+    }
+   );
