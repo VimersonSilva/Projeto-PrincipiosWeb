@@ -2,7 +2,7 @@ import { Product } from '../models/product';
 import {ProductRepository} from '../repository/productRepository'
 export class ProductService {
     productsRepository: ProductRepository;
-
+    private products: Product[] = [];
     constructor(productsRepository?: ProductRepository) {
         this.productsRepository = productsRepository || new ProductRepository();
     }
@@ -13,10 +13,10 @@ export class ProductService {
       return productReturn;
   }
 
-    //addProduct(product: Product): void {
-    //    this.products.push(product);
-    //    console.log("Produto cadastrado: ", product);
-    //}
+    addProduct(product: Product): void {
+        this.products.push(product);
+        console.log("Produto cadastrado: ", product);
+    }
 
     getProductById(id: number): Promise<Product | null>  {
         const product = this.productsRepository.findById(id);

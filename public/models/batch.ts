@@ -5,6 +5,7 @@ export class Batch extends Model {
   public id!: number;
   public serialNumber!: string;
   public quantity!: number;
+    Product: any;
 }
 
 Batch.init(

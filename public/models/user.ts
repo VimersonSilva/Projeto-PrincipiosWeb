@@ -21,6 +21,8 @@ export class User extends Model {
     public name!: string;
     public email!: string;
     public password!: string;
+    role?: string;
+
     //public batchId!: number;
   }
 User.init(

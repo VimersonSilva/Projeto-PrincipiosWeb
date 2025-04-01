@@ -1,4 +1,13 @@
 import {Request, Response, NextFunction} from 'express';
+
+// Extend the Request interface to include the `user` property
+declare global {
+  namespace Express {
+    interface Request {
+      user?: { role: string; [key: string]: any };
+    }
+  }
+}
 import {verifyToken} from '../utils/auth';
 
 export const authenticate = (req: Request, res:Response, next:NextFunction): Promise<void> | void => {
@@ -16,3 +25,10 @@ export const authenticate = (req: Request, res:Response, next:NextFunction): Pro
         res.status(400).json({message: 'Invalid token'});
     }
 };
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+    if (req.user?.role !== 'admin') {
+      return res.status(403).json({ error: 'Acesso negado' });
+    }
+    next();
+  };

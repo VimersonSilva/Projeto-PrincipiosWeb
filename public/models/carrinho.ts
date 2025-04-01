@@ -5,6 +5,7 @@ import {User} from "./user";
 export class Carrinho extends Model {
   public id!: number;
   public userId!: number;
+  Batchs: any;
 }
 
 Carrinho.init(

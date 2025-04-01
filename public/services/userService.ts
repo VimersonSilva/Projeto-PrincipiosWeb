@@ -1,6 +1,15 @@
 import { User } from '../models/user';
 
 export class UserService {
+    async getUserByEmail(email: string): Promise<User | null> {
+        const user = this.users.find(user => user.email === email);
+        return user || null
+    }
+    async getUserByNameOrEmail(username: string, email: string): Promise<User | null> {
+        return this.users.find(user => 
+            user.name === username || user.email === email
+        ) || null;
+    }
     users: User[];
 
     constructor() {
