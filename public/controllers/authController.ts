@@ -1,5 +1,13 @@
 import { UserService } from '../services/userService';
 import { Request, Response } from 'express';
+
+declare global {
+    namespace Express {
+        interface Request {
+            user?: { id: string; name: string; role: string };
+        }
+    }
+}
 import { comparePassword, generateToken, hashPassword } from '../utils/auth';
 import { User } from '../models/user'; 
 
@@ -126,9 +134,7 @@ export class AuthController {
         }
     }
 
-    /**
-     * Obtém informações do usuário atual
-     */
+    // Obtém informações do usuário atua
     public getCurrentUser = async (req: Request, res: Response) => {
         try {
             // O middleware de autenticação já adicionou o usuário à requisição
@@ -139,7 +145,7 @@ export class AuthController {
                 });
             }
 
-            const user = await this.userService.getUserById(req.user.id);
+            const user = await this.userService.getUserById(Number(req.user.id));
             
             if (!user) {
                 return res.status(404).json({ 
@@ -148,7 +154,7 @@ export class AuthController {
                 });
             }
 
-            // Remove a senha do objeto user antes de enviar
+            // Remove a senha do user antes de enviar
             if (typeof user !== 'object' || !('password' in user)) {
                 return res.status(500).json({ 
                     success: false,
