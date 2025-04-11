@@ -6,6 +6,12 @@ export class UserController{
 
     constructor(){
         this.userService = new UserService();
+        this.addUser = this.addUser.bind(this);
+        this.createUser = this.createUser.bind(this);
+        this.getAllUser = this.getAllUser.bind(this);
+        this.getUserById = this.getUserById.bind(this);
+        this.updateUser = this.updateUser.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     async createUser(req: Request, res: Response){
@@ -35,8 +41,12 @@ export class UserController{
     }
 
     async getAllUser(req:Request, res:Response){
-        const products = this.userService.getAllUsers();
-        return res.json(products);
+        try {
+            const users = await this.userService.getAllUsers(); 
+            return res.json(users);
+        } catch (error: any) {
+            return res.status(500).json({ error: error.message });
+        }
     }
 
     async getUserById(req:Request, res:Response){
@@ -64,7 +74,7 @@ export class UserController{
 
     async delete(req: Request, res: Response){
         try{
-            const message = this.userService.removeUserById(Number(req.params.id));
+            const message = await this.userService.removeUserById(Number(req.params.id));
             if(message === undefined) return res.status(404).json({error: "Usuario não encontrado"});
             return res.status(203).json(message);
         } catch (error: any){

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { Carrinho } from "../models/carrinho.ts";
-import { Batch } from "../models/batch.ts" 
-import { Product } from '../models/product.ts';
+import { Carrinho } from "../models/carrinho";
+import { Batch } from "../models/batch" 
+import { Product } from '../models/product';
 
 export class CartController {
   async getCart(req: Request, res: Response) {

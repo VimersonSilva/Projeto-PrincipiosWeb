@@ -62,7 +62,7 @@ export class OrderController {
 
       // 4. Cria os itens do pedido e atualiza estoque
       const orderItems = await Promise.all(
-        cart.Batchs.map(async (item) => {
+        cart.Batchs.map(async (item: { productId: any; quantity: any; Product: { price: any; }; }) => {
           const orderItem = await OrderItem.create({
             orderId: order.id,
             productId: item.productId,
@@ -188,7 +188,7 @@ export class OrderController {
 
       // Devolve os itens ao estoque
       await Promise.all(
-        order.OrderItems.map(async (item) => {
+        order.OrderItems.map(async (item: { quantity: any; productId: any; }) => {
           await Product.increment('stock', {
             by: item.quantity,
             where: { id: item.productId },

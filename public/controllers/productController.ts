@@ -2,13 +2,16 @@ import {Request, Response} from "express";
 import { ProductService } from '../services/productService';
 
 export class ProductController{
-    static createProduct(name: string, price: number) {
-      throw new Error("Method not implemented.");
-    }
+
     productService: ProductService;
 
     constructor(){
         this.productService = new ProductService();
+        this.createProduct = this.createProduct.bind(this);
+        this.getAllProducts = this.getAllProducts.bind(this);
+        this.getProductById = this.getProductById.bind(this);
+        this.updateProduct = this.updateProduct.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     async createProduct(req: Request, res: Response){

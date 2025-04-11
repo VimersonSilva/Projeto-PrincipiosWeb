@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { CartController } from '../controllers/cartController';
 import { authenticate } from '../middlewares/authMiddleware';
 import { validate } from '../middlewares/validate';
-import { cartItemSchema } from '../validators/cartValidator.ts';
+import { cartItemSchema } from '../validators/cartValidator';
 
 const router = Router();
 const cartController = new CartController();

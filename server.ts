@@ -1,6 +1,6 @@
-import express from 'express';
-import { Application, Request, Response } from 'express-serve-static-core';
+import express, { Application, Request, Response } from 'express';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 const app: Application = express();
 const port: number = 3000;
