@@ -11,6 +11,8 @@ import cors from "cors";
 import authRoutes from './routes/authRoutes';
 import productRoutes from './routes/productRoutes';
 import userRoutes from './routes/userRoutes';
+import cartRoutes from './routes/cartRoutes';
+import orderRoutes from './routes/orderRoutes';
 import { authenticate } from './middlewares/authMiddleware';
 import { Request, Response, NextFunction } from "express";
 import routes from './routes/routes';
@@ -34,7 +36,9 @@ app.use('/api', routes);
 
 app.use('/auth', authRoutes);
 app.use('/api/products', productRoutes); 
-app.use('/api/users', userRoutes);       
+app.use('/api/users', userRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);       
 
 app.get('/api', (req, res) => {         
     res.json({ message: "API funcionando!" });
@@ -44,7 +48,7 @@ app.get('/protected', authenticate, (req:Request, res:Response) => {
 })
 
 
-
+/*
 app.post("/product", async (req:Request, res:Response) => {
     try {
 
@@ -140,7 +144,7 @@ app.delete("/user/:id", async (req:Request, res:Response) => {
     } catch (error: any) {
         res.status(500).json({ message: "Erro ao deletar o usuario", error: error.message })
     }
-})
+}) */
 //middleware globalde erro para capturar do next na const authenticate
 /*app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     console.error("Middleware de erro:", err.message);
