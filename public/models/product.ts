@@ -1,31 +1,35 @@
-import { Model, DataTypes, Optional } from 'sequelize';
-import sequelize from '../config/database';
+import { Model, DataTypes, Optional } from "sequelize";
+import sequelize from "../config/database";
 
 export class Product extends Model {
-    id!: number;
-    name!: string;
-    price!: number;
-    stock!: number;
+  id!: number;
+  name!: string;
+  price!: number;
+  stock!: number;
 }
 Product.init(
-    {
+  {
     id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    primaryKey: true,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
     },
     name: {
-    type: DataTypes.STRING,
-    allowNull: false,
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     price: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
     },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
-    {
+  },
+  {
     sequelize,
     tableName: "products",
     timestamps: false,
-    }
-   );
+  }
+);
