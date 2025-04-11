@@ -32,8 +32,9 @@ export class AuthController {
                     message: 'Username and password are required' 
                 });
             }
-
+            console.log("Tentando logar com:", username);
             const user = await this.userService.getUserByName(username)||await this.userService.getUserByEmail(username);;
+            console.log("Usuário encontrado:", user);
 
             if (!user) {
                 return res.status(401).json({ 
@@ -43,7 +44,15 @@ export class AuthController {
             }
 
             const isPasswordValid = await comparePassword(password, user.password);
+            console.log("Senha válida?", isPasswordValid);
+
             
+        console.log("Senha digitada:", password);
+        console.log("Senha no banco:", user.password);
+
+        const test = await comparePassword(password, user.password);
+        console.log("Resultado do comparePassword:", test);
+
             if (!isPasswordValid) {
                 return res.status(401).json({ 
                     success: false,
@@ -77,6 +86,8 @@ export class AuthController {
                 message: 'Internal server error' 
             });
         }
+
+
     }
 
     /**
@@ -105,10 +116,11 @@ export class AuthController {
             }
 
             // Cria o novo usuário
+            const hashedPassword = await hashPassword(password);
             const newUser = await this.userService.createUser(
                 username,
                 email,
-                password
+                hashedPassword,
             );
 
             // Gera token para o novo usuário
@@ -181,8 +193,7 @@ export class AuthController {
      */
     public logout = async (req: Request, res: Response) => {
         try {
-            // Em um sistema JWT stateless, o logout é feito no cliente
-            // Poderíamos implementar uma blacklist de tokens aqui se necessário
+
             res.status(200).json({ 
                 success: true,
                 message: 'Logout successful' 

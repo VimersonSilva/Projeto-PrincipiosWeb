@@ -6,7 +6,6 @@ export class UserController{
 
     constructor(){
         this.userService = new UserService();
-        this.addUser = this.addUser.bind(this);
         this.createUser = this.createUser.bind(this);
         this.getAllUser = this.getAllUser.bind(this);
         this.getUserById = this.getUserById.bind(this);
@@ -16,19 +15,19 @@ export class UserController{
 
     async createUser(req: Request, res: Response){
         try{
-            const {name, email, password} = req.body;
+            const {username, email, password} = req.body;
 
-            if(!name || !email || !password){
+            if(!username || !email || !password){
                 res.status(400).json({message: "Todos os campos são obrigatórios."});
                 return;
             }
-            const user = await this.userService.createUser(name, email, password);
+            const user = await this.userService.createUser(username, email, password);
             return res.status(201).json(user);
         } catch( error:any){
             return res.status(400).json({error: error.message});
         }
     }
-    
+    /*
     async addUser(req: Request, res: Response){
         try{
             const user = req.body;
@@ -39,7 +38,7 @@ export class UserController{
             return res.status(400).json({error: error.message});
         }
     }
-
+*/
     async getAllUser(req:Request, res:Response){
         try {
             const users = await this.userService.getAllUsers(); 
